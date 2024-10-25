@@ -3,7 +3,9 @@ package com.example.fleet.domain.service;
 import com.example.fleet.domain.entity.User;
 import com.example.fleet.domain.repository.UserRepository;
 import com.example.fleet.domain.to.UserTO;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService {
 
   private final UserRepository userRepository;
