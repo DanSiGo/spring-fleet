@@ -55,7 +55,6 @@ public class UserService {
 
   public void deleteUser(UUID id) {
     User user = this.getById(id);
-
-    userRepository.save(user);
+    userRepository.delete(id);
   }
 }
