@@ -1,6 +1,8 @@
 package com.example.fleet.domain.service;
 
 import com.example.fleet.domain.entity.User;
+import com.example.fleet.domain.exceptions.DomainException;
+import com.example.fleet.domain.exceptions.ErrorCode;
 import com.example.fleet.domain.repository.UserRepository;
 import com.example.fleet.domain.to.PageTO;
 import com.example.fleet.domain.to.PaginationTO;
@@ -18,10 +20,13 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-  public User getById (UUID id){
+  public User getById (UUID id) throws DomainException {
     Optional<User> user = userRepository.findById(id);
 
     // criar exceções
+    if (user.isEmpty()){
+      throw new DomainException(ErrorCode.USER_NOT_FOUND);
+    }
 
     return user.get();
   }
@@ -44,7 +49,7 @@ public class UserService {
     return userRepository.findAll(paginationTO);
   }
 
-  public User updateUser(UserTO userTO, UUID id){
+  public User updateUser(UserTO userTO, UUID id) throws DomainException {
     User user = this.getById(id);
 
     user.setName(userTO.getName());
@@ -53,7 +58,7 @@ public class UserService {
     return  userRepository.save(user);
   }
 
-  public void deleteUser(UUID id) {
+  public void deleteUser(UUID id) throws DomainException {
     User user = this.getById(id);
     userRepository.delete(id);
   }
