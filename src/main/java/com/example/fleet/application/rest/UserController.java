@@ -1,6 +1,7 @@
 package com.example.fleet.application.rest;
 
 import com.example.fleet.domain.entity.User;
+import com.example.fleet.domain.exceptions.DomainException;
 import com.example.fleet.domain.service.UserService;
 import com.example.fleet.domain.to.PageTO;
 import com.example.fleet.domain.to.PaginationTO;
@@ -24,7 +25,7 @@ public class UserController {
   }
 
   @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<User> create (@RequestBody UserTO userTO){
+  public ResponseEntity<User> create (@RequestBody UserTO userTO) throws DomainException {
     return ResponseEntity.ok(userService.createUser(userTO));
   }
 
@@ -41,12 +42,14 @@ public class UserController {
   }
 
   @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<User> update(@RequestBody UserTO userTO, @PathVariable("id") UUID id) {
+  public ResponseEntity<User> update(@RequestBody UserTO userTO, @PathVariable("id") UUID id)
+      throws DomainException {
     return ResponseEntity.ok(userService.updateUser(userTO, id));
   }
 
   @DeleteMapping(value = "/{id}")
-  public ResponseEntity<User> delete(@RequestBody @PathVariable("id") UUID id) {
+  public ResponseEntity<User> delete(@RequestBody @PathVariable("id") UUID id)
+      throws DomainException {
     userService.deleteUser(id);
     return ResponseEntity.ok().build();
   }

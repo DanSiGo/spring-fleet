@@ -9,5 +9,6 @@ public interface BaseRepository<T> {
     T save(T entity);
     PageTO<T> findAll(PaginationTO paginationTO);
     Optional<T> findById(UUID id);
+    Optional<T> findByName(String name);
     Optional<T> delete(UUID id);
 }

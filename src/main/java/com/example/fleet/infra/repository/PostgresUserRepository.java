@@ -40,6 +40,12 @@ public class PostgresUserRepository implements UserRepository {
   }
 
   @Override
+  public Optional<User> findByName(String name) {
+    return userRepository.findByName(name);
+  }
+
+
+  @Override
   public Optional<User> delete(UUID id) {
     Optional<User> user = userRepository.findById(id);
     user.ifPresent(userRepository::delete);

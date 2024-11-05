@@ -31,9 +31,13 @@ public class UserService {
     return user.get();
   }
 
-  public User createUser(UserTO userTO) {
+  public User createUser(UserTO userTO) throws DomainException {
 
     // criar exceções para tratar erros como user ja existe
+    Optional<User> userDB = userRepository.findByName(userTO.getName());
+    if (userDB.isPresent()){
+      throw new DomainException(ErrorCode.USER_ALREADY_EXISTS);
+    }
 
     User user = User.builder()
         .name(userTO.getName())
